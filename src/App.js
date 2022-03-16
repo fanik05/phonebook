@@ -36,6 +36,19 @@ const App = () => {
       setNewNumber("");
     });
   };
+  const deletePerson = (id) => {
+    if (
+      window.confirm(
+        `Delete ${persons.filter((person) => person.id === id)[0].name}`
+      )
+    ) {
+      personService
+        .deleteOne(id)
+        .then((deletedPerson) =>
+          setPersons(persons.filter((person) => person.id !== id))
+        );
+    }
+  };
 
   const personsToShow = persons.filter((person) =>
     person.name.match(new RegExp(filter, "i"))
@@ -56,7 +69,7 @@ const App = () => {
         handleSubmit={handleSubmit}
       />
       <h2>Numbers</h2>
-      <Persons persons={personsToShow} />
+      <Persons persons={personsToShow} deletePerson={deletePerson} />
     </div>
   );
 };
