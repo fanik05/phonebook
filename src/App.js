@@ -25,6 +25,8 @@ const App = () => {
   const handleSubmit = event => {
     event.preventDefault()
 
+    const personObject = { name: newName, number: newNumber }
+
     if (persons.map(person => person.name).includes(newName)) {
       if (
         window.confirm(
@@ -32,15 +34,15 @@ const App = () => {
         )
       ) {
         const id = persons.filter(person => person.name === newName)[0].id
-        const updatedPersonObject = { name: newName, number: newNumber }
 
         return personService
-          .updateOne(id, updatedPersonObject)
-          .then(updatedPerson => {
-            const index = persons.findIndex(person => person.id === id)
-            const copyPersons = persons.slice()
-            copyPersons[index] = updatedPerson
-            setPersons(copyPersons)
+          .updateOne(id, personObject)
+          .then(returnedPerson => {
+            setPersons(
+              persons.map(person =>
+                person.id !== id ? person : returnedPerson
+              )
+            )
             setNewName('')
             setNewNumber('')
           })
@@ -48,8 +50,6 @@ const App = () => {
 
       return
     }
-
-    const personObject = { name: newName, number: newNumber }
 
     personService.create(personObject).then(returnedPerson => {
       setPersons(persons.concat(returnedPerson.data))
