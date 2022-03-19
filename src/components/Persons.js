@@ -1,6 +1,6 @@
 const Persons = ({ persons, deletePerson }) => (
   <div>
-    {persons ? (
+    {persons.length ? (
       persons.map(person => (
         <div key={person.id}>
           {person.name} {person.number}{' '}
