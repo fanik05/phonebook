@@ -50,6 +50,12 @@ const App = () => {
             setNewName('')
             setNewNumber('')
           })
+          .catch(error => {
+            setErrorMessage(error.response.data.error)
+            setTimeout(() => {
+              setErrorMessage(null)
+            }, 5000)
+          })
       }
 
       return
@@ -65,12 +71,10 @@ const App = () => {
         setTimeout(() => setSuccessMessage(null), 5000)
       })
       .catch(error => {
-        if (error.response.data.error.includes('minimum allowed length')) {
-          setErrorMessage('minimum length of name should be 3')
-          setTimeout(() => {
-            setErrorMessage(null)
-          }, 5000)
-        }
+        setErrorMessage(error.response.data.error)
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
       })
   }
 
