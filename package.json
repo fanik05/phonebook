@@ -1,7 +1,9 @@
 {
   "name": "phonebook",
   "version": "0.1.0",
-  "private": true,
+  "main": "index.js",
+  "author": "Fatin Noor Anik",
+  "license": "MIT",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
