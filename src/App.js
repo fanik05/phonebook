@@ -55,13 +55,23 @@ const App = () => {
       return
     }
 
-    personService.create(personObject).then(returnedPerson => {
-      setPersons(persons.concat(returnedPerson))
-      setNewName('')
-      setNewNumber('')
-      setSuccessMessage(`Added ${returnedPerson.name}`)
-      setTimeout(() => setSuccessMessage(null), 5000)
-    })
+    personService
+      .create(personObject)
+      .then(returnedPerson => {
+        setPersons(persons.concat(returnedPerson))
+        setNewName('')
+        setNewNumber('')
+        setSuccessMessage(`Added ${returnedPerson.name}`)
+        setTimeout(() => setSuccessMessage(null), 5000)
+      })
+      .catch(error => {
+        if (error.response.data.error.includes('minimum allowed length')) {
+          setErrorMessage('minimum length of name should be 3')
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
+        }
+      })
   }
 
   const deletePerson = id => {
